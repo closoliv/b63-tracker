@@ -113,7 +113,8 @@ export function buildRow(
 
   const value = row.unit === "leave" ? row.leaveIn : row.stopsAway;
   if (value == null) {
-    return { ...row, unit: line.unit, error: "No upcoming vehicles" };
+    const what = line.mode === "subway" ? `${line.route} trains at ${line.stopId}` : `${line.route} buses at stop ${line.stopId}`;
+    return { ...row, unit: line.unit, error: `No upcoming ${what}` };
   }
   row.zone = zoneFor(row.unit, value);
   row.fill = fillFor(row.unit, value);

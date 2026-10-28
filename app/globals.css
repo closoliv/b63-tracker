@@ -137,3 +137,242 @@ body {
   opacity: 0.55;
   text-align: center;
 }
+
+.bullet.small.subway {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+}
+
+/* ───────────── settings ───────────── */
+
+.settings {
+  max-width: 900px;
+  padding-bottom: 48px;
+}
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.settings-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form-card {
+  gap: 18px;
+  padding: 20px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.field-label {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0;
+}
+.field-help {
+  font-size: 13px;
+  opacity: 0.65;
+}
+.field-error {
+  font-size: 14px;
+  color: #ff8a85;
+}
+.input {
+  min-height: 48px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #0f1014;
+  color: #fff;
+  font-size: 17px; /* >= 16px stops iOS zooming on focus */
+}
+.input:focus-visible,
+.btn:focus-visible,
+.step:focus-visible,
+.text-link:focus-visible,
+.segmented label:has(input:focus-visible),
+.picker-list:focus-visible {
+  outline: 2px solid #8ab4ff;
+  outline-offset: 2px;
+}
+.input[aria-invalid="true"],
+.input.invalid {
+  border-color: #ff8a85;
+}
+.input:disabled,
+fieldset:disabled .segmented {
+  opacity: 0.6;
+}
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.segmented {
+  display: flex;
+  border-radius: 10px;
+  background: #0f1014;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 3px;
+  gap: 3px;
+}
+.segmented label {
+  flex: 1;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.segmented label.on {
+  background: #fff;
+  color: #16181d;
+}
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.stepper {
+  display: flex;
+  gap: 8px;
+}
+.stepper .input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.step {
+  flex-shrink: 0;
+  width: 48px;
+  min-height: 48px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.picker {
+  position: relative;
+}
+.picker-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+.chevron {
+  margin-left: auto;
+  opacity: 0.6;
+}
+.picker-list {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 4px;
+  padding: 8px;
+  border-radius: 12px;
+  background: #22252c;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+.picker-option {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.picker-option.active {
+  background: rgba(255, 255, 255, 0.14);
+}
+.picker-option[aria-selected="true"] {
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+.btn {
+  flex: 1;
+  min-height: 52px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.btn.primary {
+  background: #fff;
+  color: #16181d;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.text-link {
+  color: #8ab4ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: inherit;
+}
+.device-note {
+  font-size: 14px;
+  opacity: 0.8;
+}
+.banner {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #22252c;
+  font-size: 15px;
+}
+.banner.success {
+  background: #173524;
+}
+.banner.error {
+  background: #3d1b1a;
+}
+.muted {
+  opacity: 0.6;
+}
+.small {
+  font-size: 14px;
+}
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

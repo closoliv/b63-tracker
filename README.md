@@ -30,12 +30,26 @@ npm run dev
 | ------------- | ----------------------------------------------------------------------- |
 | `MTA_BUS_KEY` | MTA Bus Time API key. If empty, bus lines use mock data.                 |
 | `USE_MOCK`    | `true` to use fake arrivals for every line (counts down and rolls over). |
+| `ADMIN_PASSCODE` | Passcode for saving on `/settings`. If empty, settings can't be changed. |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis for saved settings. `KV_REST_API_URL` / `KV_REST_API_TOKEN` also work. |
 
 Keys are only read on the server and never sent to the browser. `.env.local` is gitignored.
 
-## Changing lines
+## Settings
 
-Edit `config/lines.json` (1 or 2 lines):
+Display settings can be changed from your phone at `/settings`, with no code change or redeploy. Every device (and later the LED sign) reads the same saved settings, and displays pick up a save within one 30s refresh.
+
+1. **Add Upstash Redis in Vercel**: in your Vercel project, open Storage (or the Marketplace), add **Upstash Redis**, and connect it to the project. This injects `UPSTASH_REDIS_REST_URL`/`TOKEN` or `KV_REST_API_URL`/`TOKEN`; either pair works.
+2. **Set `ADMIN_PASSCODE`** in the project's Environment Variables, then redeploy once so both changes take effect.
+3. **Open `/settings` by typing the URL** (e.g. `https://your-app.vercel.app/settings`). There's deliberately no link to it from the display, and it's marked `noindex`. Enter the passcode once; it's remembered on that device (use "Forget passcode" to clear it).
+
+On the settings page you can preview the real panels before saving. Settings are stored as JSON under the Redis key `settings:v1`. Until something is saved, or when Redis isn't configured, the app uses `config/lines.json`, and `/settings` shows "Storage not configured" and is read-only.
+
+API: `GET /api/settings` (public), `PUT /api/settings` and `POST /api/settings/preview` (both need the `x-admin-passcode` header).
+
+## Changing the default lines
+
+Edit `config/lines.json` (1 or 2 lines). This is the fallback when nothing has been saved on `/settings`:
 
 ```json
 { "label": "Carlos", "mode": "bus", "route": "B63",

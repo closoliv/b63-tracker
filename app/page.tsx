@@ -1,101 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { DepartureRow, Zone } from "@/lib/types";
+import { DeparturePanel } from "@/components/DeparturePanel";
+import type { DepartureRow } from "@/lib/types";
 
 const POLL_MS = 30_000;
-
-const ZONE_COLOR: Record<Zone, string> = {
-  green: "var(--green)",
-  yellow: "var(--yellow)",
-  red: "var(--red)",
-};
-
-function Bullet({ row }: { row: DepartureRow }) {
-  return (
-    <span
-      className={`bullet ${row.mode}`}
-      style={{ background: row.routeColor.bg, color: row.routeColor.text }}
-      aria-label={`${row.route} ${row.mode}`}
-    >
-      {row.route}
-    </span>
-  );
-}
-
-function nextText(row: DepartureRow): string | null {
-  if (row.unit === "leave") {
-    if (row.nextLeaveIn == null) return null;
-    return row.nextLeaveIn === 0 ? "Next: leave now" : `Next: leave in ${row.nextLeaveIn} min`;
-  }
-  if (row.nextStopsAway == null) return null;
-  if (row.nextStopsAway === 0) return "Next: here";
-  return `Next: ${row.nextStopsAway} ${row.nextStopsAway === 1 ? "stop" : "stops"} away`;
-}
-
-function Panel({ row }: { row: DepartureRow }) {
-  const header = (
-    <div>
-      <div className="label">{row.label}</div>
-      <div className="route">
-        <Bullet row={row} />
-        <span>{row.direction}</span>
-      </div>
-    </div>
-  );
-
-  if (row.error) {
-    return (
-      <section className="panel dim">
-        {header}
-        <div>
-          <div className="reading">
-            <span className="big nodata">No data</span>
-          </div>
-          <div className="reason">{row.error}</div>
-        </div>
-      </section>
-    );
-  }
-
-  const value = row.unit === "leave" ? row.leaveIn : row.stopsAway;
-  let big: string;
-  let unitLabel: string | null;
-  if (value === 0) {
-    big = row.unit === "leave" ? "Go" : "Here";
-    unitLabel = null;
-  } else {
-    big = String(value);
-    unitLabel = row.unit === "leave" ? "min to leave" : value === 1 ? "stop away" : "stops away";
-  }
-  const next = nextText(row);
-
-  return (
-    <section className="panel">
-      {header}
-      <div>
-        <div className="reading">
-          <span className="big">{big}</span>
-          {unitLabel && <span className="unit">{unitLabel}</span>}
-        </div>
-        <div
-          className="track"
-          role="meter"
-          aria-label={row.zone}
-          aria-valuemin={0}
-          aria-valuemax={1}
-          aria-valuenow={row.fill}
-        >
-          <div
-            className="bar"
-            style={{ width: `${row.fill * 100}%`, background: ZONE_COLOR[row.zone] }}
-          />
-        </div>
-      </div>
-      {next && <div className="next">{next}</div>}
-    </section>
-  );
-}
 
 export default function Home() {
   const [rows, setRows] = useState<DepartureRow[] | null>(null);
@@ -123,7 +32,13 @@ export default function Home() {
     load();
     const poll = setInterval(load, POLL_MS);
     const tick = setInterval(() => setNow(Date.now()), 1000);
+    // Coming back to the tab (e.g. after saving settings) refreshes right away.
+    const onVisible = () => {
+      if (document.visibilityState === "visible") load();
+    };
+    document.addEventListener("visibilitychange", onVisible);
     return () => {
+      document.removeEventListener("visibilitychange", onVisible);
       clearInterval(poll);
       clearInterval(tick);
     };
@@ -135,7 +50,7 @@ export default function Home() {
   return (
     <main className="page">
       <div className="grid">
-        {rows?.map((row) => <Panel key={`${row.label}-${row.route}`} row={row} />)}
+        {rows?.map((row) => <DeparturePanel key={`${row.label}-${row.route}`} row={row} />)}
       </div>
       <footer className="footer">
         {ago == null ? (fetchError ? `Couldn't load: ${fetchError}` : "Loading…") : `updated ${ago}s ago`}
