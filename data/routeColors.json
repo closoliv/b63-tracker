@@ -1,0 +1,16 @@
+{
+  "source": "MTA Colors dataset, data.ny.gov (downloaded 2026-10-28)",
+  "subway": {
+    "A":{"bg":"#0062CF","text":"#FFFFFF"},"C":{"bg":"#0062CF","text":"#FFFFFF"},"E":{"bg":"#0062CF","text":"#FFFFFF"},
+    "B":{"bg":"#EB6800","text":"#FFFFFF"},"D":{"bg":"#EB6800","text":"#FFFFFF"},"F":{"bg":"#EB6800","text":"#FFFFFF"},"M":{"bg":"#EB6800","text":"#FFFFFF"},
+    "G":{"bg":"#799534","text":"#FFFFFF"},
+    "J":{"bg":"#8E5C33","text":"#FFFFFF"},"Z":{"bg":"#8E5C33","text":"#FFFFFF"},
+    "L":{"bg":"#7C858C","text":"#FFFFFF"},"S":{"bg":"#7C858C","text":"#FFFFFF"},
+    "N":{"bg":"#F6BC26","text":"#1A1A1A"},"Q":{"bg":"#F6BC26","text":"#1A1A1A"},"R":{"bg":"#F6BC26","text":"#1A1A1A"},"W":{"bg":"#F6BC26","text":"#1A1A1A"},
+    "T":{"bg":"#008EB7","text":"#FFFFFF"},
+    "1":{"bg":"#D82233","text":"#FFFFFF"},"2":{"bg":"#D82233","text":"#FFFFFF"},"3":{"bg":"#D82233","text":"#FFFFFF"},
+    "4":{"bg":"#009952","text":"#FFFFFF"},"5":{"bg":"#009952","text":"#FFFFFF"},"6":{"bg":"#009952","text":"#FFFFFF"},
+    "7":{"bg":"#9A38A1","text":"#FFFFFF"}
+  },
+  "bus": {"bg":"#08179C","text":"#FFFFFF","note":"Not in MTA Colors dataset; MTA brand blue as default"}
+}
