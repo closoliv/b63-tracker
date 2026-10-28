@@ -43,6 +43,7 @@ Edit `config/lines.json` (1 or 2 lines):
 ```
 
 - `mode`: `bus` or `subway`
+- `direction`: label shown under the route. Optional for subway lines, which derive it from the stop ID suffix (`N` → "Manhattan-bound", `S` → "Brooklyn-bound"); a non-empty value overrides that
 - `stopId`: Bus Time stop code (e.g. B63 southbound `308215`, northbound `308208`) or GTFS stop ID with direction (e.g. `R32N`, `R32S`)
 - `walkMin`: minutes to walk to the stop
 - `unit`: `leave` (minutes until you must leave) or `stops` (stops away)

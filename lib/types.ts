@@ -6,7 +6,8 @@ export interface LineConfig {
   label: string;
   mode: Mode;
   route: string;
-  direction: string;
+  /** Optional override; subway lines otherwise derive it from the stop ID suffix. */
+  direction?: string;
   stopId: string;
   walkMin: number;
   unit: Unit;
