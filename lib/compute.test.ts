@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildRow,
+  directionLabel,
   fillFor,
   leaveIn,
   selectArrivals,
@@ -16,9 +17,25 @@ const busLine: LineConfig = {
   stopId: "308215", walkMin: 3, unit: "leave",
 };
 const subwayLine: LineConfig = {
-  label: "Freyal", mode: "subway", route: "R", direction: "N",
+  label: "Freyal", mode: "subway", route: "R",
   stopId: "R32N", walkMin: 8, unit: "stops",
 };
+
+describe("directionLabel", () => {
+  it("derives Manhattan-bound from an N stop ID", () => {
+    expect(directionLabel(subwayLine)).toBe("Manhattan-bound");
+  });
+  it("derives Brooklyn-bound from an S stop ID", () => {
+    expect(directionLabel({ ...subwayLine, stopId: "R32S" })).toBe("Brooklyn-bound");
+  });
+  it("uses a non-empty config direction as an override", () => {
+    expect(directionLabel({ ...subwayLine, direction: "Uptown" })).toBe("Uptown");
+    expect(directionLabel({ ...subwayLine, direction: "  " })).toBe("Manhattan-bound");
+  });
+  it("uses the config direction for buses", () => {
+    expect(directionLabel(busLine)).toBe("Southbound");
+  });
+});
 
 describe("leaveIn", () => {
   it("subtracts walk time", () => {
@@ -118,7 +135,9 @@ describe("buildRow", () => {
       { minutesAway: 3, stopsAway: 1 },
       { minutesAway: 15, stopsAway: 8 },
     ], color, at);
-    expect(row).toMatchObject({ stopsAway: 1, nextStopsAway: 8, unit: "stops", zone: "red" });
+    expect(row).toMatchObject({
+      direction: "Manhattan-bound", stopsAway: 1, nextStopsAway: 8, unit: "stops", zone: "red",
+    });
     expect(row.fill).toBeCloseTo(0.9);
   });
 

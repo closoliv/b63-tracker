@@ -8,6 +8,24 @@ import type {
   Zone,
 } from "./types";
 
+const SUBWAY_DIRECTIONS: Record<string, string> = {
+  N: "Manhattan-bound",
+  S: "Brooklyn-bound",
+};
+
+/**
+ * Direction shown under the route. A non-empty config `direction` wins;
+ * otherwise subway lines derive it from the GTFS stop ID suffix (R32N → N).
+ */
+export function directionLabel(line: Pick<LineConfig, "mode" | "stopId" | "direction">): string {
+  const override = line.direction?.trim();
+  if (override) return override;
+  if (line.mode === "subway") {
+    return SUBWAY_DIRECTIONS[line.stopId.slice(-1).toUpperCase()] ?? "";
+  }
+  return "";
+}
+
 /** Minutes until you must leave to catch a vehicle. Fractional, may be negative. */
 export function leaveIn(minutesAway: number | null, walkMin: number): number | null {
   return minutesAway == null ? null : minutesAway - walkMin;
@@ -72,7 +90,7 @@ export function buildRow(
     label: line.label,
     mode: line.mode,
     route: line.route,
-    direction: line.direction,
+    direction: directionLabel(line),
     routeColor: color,
     updatedAt,
   };
@@ -112,7 +130,7 @@ export function errorRow(
     label: line.label,
     mode: line.mode,
     route: line.route,
-    direction: line.direction,
+    direction: directionLabel(line),
     minutesAway: null,
     stopsAway: null,
     leaveIn: null,
