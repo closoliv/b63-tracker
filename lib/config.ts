@@ -1,5 +1,4 @@
-import linesJson from "../config/lines.json";
-import type { LineConfig, Unit } from "./types";
+import type { Unit } from "./types";
 
 export const THRESHOLDS: Record<
   Unit,
@@ -13,11 +12,3 @@ export const THRESHOLDS: Record<
 
 /** Minimum bar width so a far-away vehicle still shows a sliver. */
 export const MIN_FILL = 0.08;
-
-export function getLines(): LineConfig[] {
-  const lines = (linesJson as { lines: LineConfig[] }).lines;
-  if (!Array.isArray(lines) || lines.length < 1 || lines.length > 2) {
-    throw new Error("config/lines.json must define 1 or 2 lines");
-  }
-  return lines;
-}

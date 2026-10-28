@@ -148,7 +148,7 @@ describe("buildRow", () => {
 
   it("reports an error when there is nothing to show", () => {
     const row = buildRow(busLine, [], color, at);
-    expect(row.error).toBe("No upcoming vehicles");
+    expect(row.error).toBe("No upcoming B63 buses at stop 308215");
     expect(row.minutesAway).toBeNull();
   });
 });
