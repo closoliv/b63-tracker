@@ -1,0 +1,6 @@
+{ "lines": [
+  { "label": "Carlos", "mode": "bus", "route": "B63",
+    "direction": "Southbound", "stopId": "308215", "walkMin": 3, "unit": "leave" },
+  { "label": "Freyal", "mode": "subway", "route": "R",
+    "direction": "N", "stopId": "R32N", "walkMin": 8, "unit": "stops" }
+] }
