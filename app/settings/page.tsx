@@ -531,8 +531,12 @@ export default function SettingsPage() {
             <input
               id="passcode"
               className="input"
-              type="password"
-              autoComplete="current-password"
+              type="text"
+              // Low stakes, so the passcode is shown as typed. Keep phones from "fixing" it.
+              autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
               value={passcodeDraft}
               aria-invalid={passcodeError ? true : undefined}
               aria-describedby={passcodeError ? "passcode-error" : "passcode-help"}
